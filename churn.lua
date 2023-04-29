@@ -197,8 +197,8 @@ minetest.register_node("cheese:churn", {
 minetest.register_craft({
 	output = "cheese:churn",
 	recipe = {
-		{"", "default:stick", ""},
-		{"", "default:wood", ""},
-		{"default:wood", "default:steel_ingot", "default:wood"},
+		{"", "group:stick", ""},
+		{"", "group:wood", ""},
+		{"group:wood", "default:steel_ingot", "group:wood"},
 	}
 })

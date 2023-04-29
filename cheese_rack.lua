@@ -2,14 +2,37 @@ local S = cheese.S
 
 local rack_types = { --moslty redundant data, but i dont feel like changing it..
 	--craft material				tiles				rack name			name	 aging time (MIN 3!)
-	{"default:wood", 				"wood", 			"wooden",	"Wooden",	55.0},
+	{"group:wood", 				"wood", 			"wooden",	"Wooden",	55.0},
 	{"default:stone", 			"stone", 			"stone",	"Stone", 	45.0},
 	{"default:mossycobble", "mossycobble","mossy",	"Mossy",	30.0},
 }
-local slab = "stairs:slab_"
-if minetest.get_modpath("moreblocks") then
-	slab = "moreblocks:slab_"
+local slabs
+if minetest.get_modpath("stairsplus") then
+	slabs = {
+		wood = "group:slab_wood_8",
+		stone = "default:slab_stone_8",
+		mossycobble = "default:slab_mossycobble_8",
+	}
+elseif minetest.get_modpath("moreblocks") then
+	slabs = {
+		wood = "moreblocks:slab_wood",
+		stone = "moreblocks:slab_stone",
+		mossycobble = "moreblocks:slab_mossycobble",
+	}
+elseif minetest.get_modpath("stairs") then
+	slabs = {
+		wood = "stairs:slab_wood",
+		stone = "stairs:slab_stone",
+		mossycobble = "stairs:slab_mossycobble",
+	}
+else
+	slabs = {
+		wood = "group:wood",
+		stone = "default:stone",
+		mossycobble = "default:mossycobble",
+	}
 end
+
 local producable = { --remember, only cow milk
 	["wooden"] 	= {"parmesan",		"fontal",			"gruyere",	"emmental"}, 	--long time, hard
 	["stone"] 	= {"asiago",		"monteray_jack",	"toma",		"gouda"}, 		-- medium time, semi soft or medium
@@ -261,9 +284,9 @@ for k, v in pairs(rack_types) do
 	minetest.register_craft({
 		output = "cheese:"..v[3].."_cheese_rack_empty",
 		recipe = {
-			{""..v[1], slab..v[2], ""..v[1]},
-			{""..v[1], slab..v[2], ""..v[1]},
-			{""..v[1], slab..v[2], ""..v[1]},
+			{""..v[1], slabs[v[2]], ""..v[1]},
+			{""..v[1], slabs[v[2]], ""..v[1]},
+			{""..v[1], slabs[v[2]], ""..v[1]},
 		}
 	})
 
